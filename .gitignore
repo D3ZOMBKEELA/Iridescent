@@ -1,4 +1,11 @@
 *.class
+/eclipse/*
+/gradle/*
+/.gradle/*
+.settings
+*.txt
+gradlew.bat
+gradlew
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
