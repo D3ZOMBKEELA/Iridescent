@@ -11,10 +11,10 @@ import net.minecraftforge.common.AchievementPage;
 
 public class AchievementHelper {
 	
-	// TODO Add in capability for multiple achievement pages
 	// TODO Add in capability to statically give an achievement to the player
 	
-	private AchievementPage iridescentAchievementPage;
+	private ArrayList<AchievementPage> achievementPages = new ArrayList<AchievementPage>();
+	private HashMap<String, Integer> achievementPagesLookupMap = new HashMap<String, Integer>();
 	private ArrayList<Achievement> iridescentAchievements = new ArrayList<Achievement>();
 	private HashMap<String, Integer> achievementsLookupMap = new HashMap<String, Integer>();
 	
@@ -47,19 +47,34 @@ public class AchievementHelper {
 		return iridescentAchievements.get(achievementsLookupMap.get(name.toLowerCase()) - 1);
 	}
 	
+	public void addAchievementPage(String pageName, String... achievements) {
+		Achievement[] achievementsFromLookup = new Achievement[achievements.length];
+		
+		for(int i = 0; i < achievements.length; ++i) {
+			achievementsFromLookup[i] = getAchievementFromName(achievements[i]);
+		}
+		
+		achievementPages.add(new AchievementPage(pageName, achievementsFromLookup));
+		
+		achievementPagesLookupMap.put(pageName.toLowerCase(), achievementPages.size());
+	}
+	
+	public AchievementPage getAchievementPage(String name) {
+		return achievementPages.get(achievementPagesLookupMap.get(name.toLowerCase()) - 1);
+	}
+	
 	/**
 	 * Call this after all achievements have been added
 	 */
 	public void initAchievements() {
-		Achievement[] achievements = new Achievement[iridescentAchievements.size()];
 		
 		for(int i = 0; i < iridescentAchievements.size(); ++i) {
 			iridescentAchievements.get(i).func_180788_c();
-			achievements[i] = iridescentAchievements.get(i);
 		}
 		
-		iridescentAchievementPage = new AchievementPage("Iridescent", achievements);
-		AchievementPage.registerAchievementPage(iridescentAchievementPage);
+		for(int i = 0; i < achievementPages.size(); ++i) {
+			AchievementPage.registerAchievementPage(achievementPages.get(i));
+		}
 	}
 	
 }

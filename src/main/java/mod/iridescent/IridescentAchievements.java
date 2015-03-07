@@ -10,7 +10,17 @@ public class IridescentAchievements {
 	AchievementHelper achievementHelper = new AchievementHelper();
 	
 	public void postInit() {
+		initAchievements();
+		initAchievementPages();
 		achievementHelper.initAchievements();
+	}
+	
+	public void initAchievements() {
+		
+	}
+	
+	public void initAchievementPages() {
+		
 	}
 	
 }
