@@ -10,17 +10,23 @@ public class IridescentMiningProperties implements IExtendedEntityProperties {
 	
 	public static final String MINING_PROP_NAME = "IridescentMining";
 	
-	private int miningLevel;
-	private int maxLevelExp;
-	private int currentLevelExp;
+	// TODO MAKE MINING LEVEL AND MAX EXP PACKETS INSTEAD OF DATA WATCHER OBJECTS
+	
+	public static final int MINING_LEVEL_ID = 20;
+	public static final int CURRENT_MINING_EXP_ID = 21;
+	public static final int MAX_MINING_EXP_ID = 22;
 	
 	private final EntityPlayer thePlayer;
 	
 	public IridescentMiningProperties(EntityPlayer player) {
 		this.thePlayer = player;
-		this.miningLevel = 1;
-		this.currentLevelExp = 0;
-		this.maxLevelExp = 15;
+		int miningLevel = 1;
+		int currentLevelExp = 0;
+		int maxLevelExp = 15;
+		
+		this.thePlayer.getDataWatcher().addObject(MINING_LEVEL_ID, miningLevel);
+		this.thePlayer.getDataWatcher().addObject(CURRENT_MINING_EXP_ID, currentLevelExp);
+		this.thePlayer.getDataWatcher().addObject(MAX_MINING_EXP_ID, maxLevelExp);
 	}
 	
 	public static void register(EntityPlayer player) {
@@ -35,9 +41,9 @@ public class IridescentMiningProperties implements IExtendedEntityProperties {
 	public void saveNBTData(NBTTagCompound compound) {
 		NBTTagCompound properties = new NBTTagCompound();
 		
-		properties.setInteger("Level", this.miningLevel);
-		properties.setInteger("CurrentExp", this.currentLevelExp);
-		properties.setInteger("MaxExp", this.maxLevelExp);
+		properties.setInteger("Level", this.thePlayer.getDataWatcher().getWatchableObjectInt(MINING_LEVEL_ID));
+		properties.setInteger("CurrentExp", this.thePlayer.getDataWatcher().getWatchableObjectInt(CURRENT_MINING_EXP_ID));
+		properties.setInteger("MaxExp", this.thePlayer.getDataWatcher().getWatchableObjectInt(MAX_MINING_EXP_ID));
 		
 		compound.setTag(MINING_PROP_NAME, properties);
 	}
@@ -46,9 +52,9 @@ public class IridescentMiningProperties implements IExtendedEntityProperties {
 	public void loadNBTData(NBTTagCompound compound) {
 		NBTTagCompound properties = (NBTTagCompound)compound.getTag(MINING_PROP_NAME);
 		
-		this.miningLevel = properties.getInteger("Level");
-		this.currentLevelExp = properties.getInteger("CurrentExp");
-		this.maxLevelExp = properties.getInteger("MaxExp");
+		this.thePlayer.getDataWatcher().updateObject(MINING_LEVEL_ID, properties.getInteger("Level"));
+		this.thePlayer.getDataWatcher().updateObject(CURRENT_MINING_EXP_ID, properties.getInteger("CurrentExp"));
+		this.thePlayer.getDataWatcher().updateObject(MAX_MINING_EXP_ID, properties.getInteger("MaxExp"));
 		
 		printMiningDetails();
 	}
@@ -57,20 +63,19 @@ public class IridescentMiningProperties implements IExtendedEntityProperties {
 		boolean levelUp = false;
 		int extraExp = 0;
 		
-		if(amount + this.currentLevelExp >= this.maxLevelExp) {
+		if(amount + getDataWatcherObject(CURRENT_MINING_EXP_ID) >= getDataWatcherObject(MAX_MINING_EXP_ID)) {
 			levelUp = true;
-			this.miningLevel++;
-			extraExp = amount + this.currentLevelExp - this.maxLevelExp;
+			updateDataWatcherObject(MINING_LEVEL_ID, getDataWatcherObject(MINING_LEVEL_ID) + 1);
+			extraExp = amount + getDataWatcherObject(CURRENT_MINING_EXP_ID) - getDataWatcherObject(MAX_MINING_EXP_ID);
 			
-			while(extraExp >= this.maxLevelExp) {
-				this.miningLevel++;
-				extraExp -= this.maxLevelExp;
+			while(extraExp >= getDataWatcherObject(MAX_MINING_EXP_ID)) {
+				updateDataWatcherObject(MINING_LEVEL_ID, getDataWatcherObject(MINING_LEVEL_ID) + 1);
+				extraExp -= getDataWatcherObject(MAX_MINING_EXP_ID);
 			}
 			
-			this.currentLevelExp = extraExp;
-			
+			updateDataWatcherObject(CURRENT_MINING_EXP_ID, extraExp);
 		} else {
-			this.currentLevelExp += amount;
+			updateDataWatcherObject(CURRENT_MINING_EXP_ID, getDataWatcherObject(CURRENT_MINING_EXP_ID) + amount);
 		}
 		
 		printMiningDetails();
@@ -79,7 +84,7 @@ public class IridescentMiningProperties implements IExtendedEntityProperties {
 	}
 	
 	public void increaseLevel(int levels) {
-		giveExp(this.maxLevelExp - this.currentLevelExp);
+		giveExp(getDataWatcherObject(MAX_MINING_EXP_ID) - getDataWatcherObject(CURRENT_MINING_EXP_ID));
 	}
 	
 	public void increaseLevel() {
@@ -88,12 +93,36 @@ public class IridescentMiningProperties implements IExtendedEntityProperties {
 	
 	public void printMiningDetails() {
 		System.out.println("\tMining:");
-		System.out.println("\tLevel: " + this.miningLevel);
-		System.out.println("\tExp: " + this.currentLevelExp + "/" + this.maxLevelExp);
+		System.out.println("\tLevel: " + getDataWatcherObject(MINING_LEVEL_ID));
+		System.out.println("\tExp: " + getDataWatcherObject(CURRENT_MINING_EXP_ID) + "/" + getDataWatcherObject(MAX_MINING_EXP_ID));
+	}
+	
+	public int getCurrentExp() {
+		return getDataWatcherObject(CURRENT_MINING_EXP_ID);
+	}
+	
+	public int getMaxExp() {
+		return getDataWatcherObject(MAX_MINING_EXP_ID);
+	}
+	
+	public int getMiningLevel() {
+		return getDataWatcherObject(MINING_LEVEL_ID);
 	}
 	
 	@Override
 	public void init(Entity entity, World world) {
+	}
+	
+	private void addDataWatcherObject(int id, Object object) {
+		this.thePlayer.getDataWatcher().addObject(id, object);
+	}
+	
+	private void updateDataWatcherObject(int id, Object newData) {
+		this.thePlayer.getDataWatcher().updateObject(id, newData);
+	}
+	
+	private int getDataWatcherObject(int id) {
+		return this.thePlayer.getDataWatcher().getWatchableObjectInt(id);
 	}
 	
 }

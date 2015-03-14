@@ -38,6 +38,7 @@ public class Iridescent {
 	public void postInit(FMLPostInitializationEvent event) {
 		achievements.postInit(); // XXX Might need to move this to either preInit or init
 		MinecraftForge.EVENT_BUS.register(new IridescentEventHandler());
+		proxy.registerRenderers();
 	}
 	
 	/**
