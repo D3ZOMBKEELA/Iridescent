@@ -10,7 +10,10 @@ public class IridescentMiningProperties implements IExtendedEntityProperties {
 	
 	public static final String MINING_PROP_NAME = "IridescentMining";
 	
-	// TODO MAKE MINING LEVEL AND MAX EXP PACKETS INSTEAD OF DATA WATCHER OBJECTS
+	// TODO MAKE EVERYTHING A PACKET, ALL ONLY UPDATED WHEN A BLOCK IS BROKEN THAT IS ONE OF THE
+	// POSSIBLE TYPES TO GIVE MINING EXP
+	
+	// Ignore #4
 	
 	public static final int MINING_LEVEL_ID = 20;
 	public static final int CURRENT_MINING_EXP_ID = 21;
@@ -24,9 +27,9 @@ public class IridescentMiningProperties implements IExtendedEntityProperties {
 		int currentLevelExp = 0;
 		int maxLevelExp = 15;
 		
-		this.thePlayer.getDataWatcher().addObject(MINING_LEVEL_ID, miningLevel);
-		this.thePlayer.getDataWatcher().addObject(CURRENT_MINING_EXP_ID, currentLevelExp);
-		this.thePlayer.getDataWatcher().addObject(MAX_MINING_EXP_ID, maxLevelExp);
+		addDataWatcherObject(MINING_LEVEL_ID, miningLevel);
+		addDataWatcherObject(CURRENT_MINING_EXP_ID, currentLevelExp);
+		addDataWatcherObject(MAX_MINING_EXP_ID, maxLevelExp);
 	}
 	
 	public static void register(EntityPlayer player) {

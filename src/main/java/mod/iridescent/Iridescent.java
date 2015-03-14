@@ -49,22 +49,23 @@ public class Iridescent {
 	 * 
 	 *  - Add extended properties for the player
 	 *  
-	 *  	General (HUD):
-	 *  	 - Health
-	 *  	 - Mana
-	 *  	 - Armor
+	 *  	General (HUD):				ID:
+	 *  	 - Health					 - 20
+	 *  	 - Mana						 - 21
+	 *  	 - Armor					 - 22
 	 *  
 	 *  	Nutrition (HUD):
-	 *  	 - Hunger
-	 *  	 - Saturation
-	 *  	 - Thirst
+	 *  	 - Hunger					 - 23
+	 *  	 - Saturation				 - 24
+	 *  	 - Thirst					 - 25
 	 *  
-	 *  	Diet (Daily):
-	 *  	 - Calories
-	 *  	 - Fat
-	 *  	 - Fibre
-	 *  	 - Sugar
-	 *  	 - Protein
+	 *  	Diet (Daily):				(Possibly)
+	 *  	 - Calories					 - 26
+	 *  	 - Fat						 - 27
+	 *  	 - Fibre					 - 28
+	 *  	 - Sugar					 - 29
+	 *  	 - Protein					 - 30
+	 *  	 - Calcium					 - 31
 	 *  	 - (Possibly more?)
 	 *  
 	 *  	Skills:
