@@ -1,9 +1,13 @@
 package mod.iridescent.events;
 
 import mod.iridescent.properties.IridescentMiningProperties;
+import mod.iridescent.proxy.ServerProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -13,6 +17,34 @@ public class IridescentEventHandler {
 	public void onEntityConstructing(EntityConstructing event) {
 		if(event.entity instanceof EntityPlayer && IridescentMiningProperties.get((EntityPlayer)event.entity) == null) {
 			IridescentMiningProperties.register((EntityPlayer)event.entity);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onLivingDeath(LivingDeathEvent event) {
+		if(!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
+			NBTTagCompound data = new NBTTagCompound();
+			IridescentMiningProperties.get((EntityPlayer)event.entity).saveNBTData(data);
+			ServerProxy.storeEntityData(event.entity.getName(), data);
+			IridescentMiningProperties.saveProxyData((EntityPlayer)event.entity);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+		if(!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
+			
+			if(IridescentMiningProperties.get((EntityPlayer)event.entity) == null) {
+				IridescentMiningProperties.register((EntityPlayer)event.entity);
+			}
+			
+			NBTTagCompound data = ServerProxy.getEntityData(event.entity.getName());
+			
+			if(data != null) {
+				IridescentMiningProperties.get((EntityPlayer)event.entity).loadNBTData(data);
+			}
+			
+			IridescentMiningProperties.get((EntityPlayer)event.entity).sync((EntityPlayer)event.entity);
 		}
 	}
 	

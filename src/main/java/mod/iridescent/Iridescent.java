@@ -1,6 +1,7 @@
 package mod.iridescent;
 
 import mod.iridescent.events.IridescentEventHandler;
+import mod.iridescent.packets.PacketPipeline;
 import mod.iridescent.proxy.IProxy;
 import mod.iridescent.reference.ModRef;
 import mod.iridescent.reference.NetworkRef;
@@ -22,7 +23,9 @@ public class Iridescent {
 	@SidedProxy(clientSide = NetworkRef.CLIENT_PROXY, serverSide = NetworkRef.SERVER_PROXY)
 	public static IProxy proxy;
 	
-	IridescentAchievements achievements = new IridescentAchievements();
+	public static final IridescentAchievements achievements = new IridescentAchievements();
+	
+	public static final PacketPipeline packetPipeline = new PacketPipeline();
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -31,11 +34,13 @@ public class Iridescent {
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		
+		packetPipeline.initialise();
 	}
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		packetPipeline.postInitialise();
+		
 		achievements.postInit(); // XXX Might need to move this to either preInit or init
 		MinecraftForge.EVENT_BUS.register(new IridescentEventHandler());
 		proxy.registerRenderers();

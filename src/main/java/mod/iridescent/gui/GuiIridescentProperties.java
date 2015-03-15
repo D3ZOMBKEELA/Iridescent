@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiIridescentProperties extends Gui {
 	
+	private IridescentMiningProperties properties;
 	private Minecraft mc;
 	
 	// ResourceLocation?
@@ -26,7 +27,7 @@ public class GuiIridescentProperties extends Gui {
 			return;
 		}
 		
-		IridescentMiningProperties properties = IridescentMiningProperties.get(this.mc.thePlayer);
+		properties = IridescentMiningProperties.get(this.mc.thePlayer);
 		
 		if(properties == null) {
 			return;
