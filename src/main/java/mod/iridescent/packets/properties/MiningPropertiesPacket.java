@@ -29,9 +29,6 @@ public class MiningPropertiesPacket extends AbstractPacket {
 	
 	public void handleClientSide(EntityPlayer player) {
 		IridescentMiningProperties.get(player).loadNBTData(data);
-		System.out.println("\tMining:");
-		System.out.println("\tLevel: " + IridescentMiningProperties.get(player).getMiningLevel());
-		System.out.println("\tExp: " + IridescentMiningProperties.get(player).getCurrentExp() + "/" + IridescentMiningProperties.get(player).getMaxExp());
 	}
 	
 	public void handleServerSide(EntityPlayer player) {

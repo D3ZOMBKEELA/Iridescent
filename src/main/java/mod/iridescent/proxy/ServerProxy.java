@@ -28,7 +28,11 @@ public class ServerProxy extends CommonProxy {
 	}
 	
 	public static NBTTagCompound getEntityData(String name) {
-		return extendedEntityData.remove(name);
+		if(extendedEntityData.get(name) != null) {
+			return extendedEntityData.remove(name);
+		} else {
+			return null;
+		}
 	}
 	
 }

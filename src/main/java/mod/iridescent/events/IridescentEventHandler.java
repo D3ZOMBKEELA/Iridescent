@@ -15,7 +15,7 @@ public class IridescentEventHandler {
 	
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
-		if(event.entity instanceof EntityPlayer && IridescentMiningProperties.get((EntityPlayer)event.entity) == null) {
+		if(event.entity instanceof EntityPlayer) {
 			IridescentMiningProperties.register((EntityPlayer)event.entity);
 		}
 	}
@@ -33,10 +33,7 @@ public class IridescentEventHandler {
 	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if(!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-			
-			if(IridescentMiningProperties.get((EntityPlayer)event.entity) == null) {
-				IridescentMiningProperties.register((EntityPlayer)event.entity);
-			}
+			IridescentMiningProperties.register((EntityPlayer)event.entity);
 			
 			NBTTagCompound data = ServerProxy.getEntityData(event.entity.getName());
 			
@@ -44,7 +41,7 @@ public class IridescentEventHandler {
 				IridescentMiningProperties.get((EntityPlayer)event.entity).loadNBTData(data);
 			}
 			
-			IridescentMiningProperties.get((EntityPlayer)event.entity).sync((EntityPlayer)event.entity);
+			IridescentMiningProperties.get((EntityPlayer)event.entity).loadProxyData((EntityPlayer)event.entity);
 		}
 	}
 	

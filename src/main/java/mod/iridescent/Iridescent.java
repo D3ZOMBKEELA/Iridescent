@@ -73,20 +73,20 @@ public class Iridescent {
 	 *  	 - Calcium					 - 31
 	 *  	 - (Possibly more?)
 	 *  
-	 *  	Skills:
-	 *  	 - Melee
-	 *  	 - Archery
-	 *  	 - Magic
-	 *  	 - Defense (Xp for damage mitigated)
-	 *  	 - Crafting
-	 *  	 - Mining (Add this one first)
-	 *  	 - Smithing
-	 *  	 - Fishing
-	 *  	 - Cooking
-	 *  	 - Firemaking
-	 *  	 - Wood cutting
-	 *  	 - Agility
-	 *  	 - Alchemy (Potion making)
+	 *  	Skills:						Status:
+	 *  	 - Melee					 - Incomplete
+	 *  	 - Archery					 - Incomplete
+	 *  	 - Magic					 - Incomplete
+	 *  	 - Defense					 - Incomplete
+	 *  	 - Crafting					 - Incomplete
+	 *  	 - Mining					 - Complete
+	 *  	 - Smithing					 - Incomplete
+	 *  	 - Fishing					 - Incomplete
+	 *  	 - Cooking					 - Incomplete
+	 *  	 - Firemaking				 - Incomplete
+	 *  	 - Wood cutting				 - Incomplete
+	 *  	 - Agility					 - Incomplete
+	 *  	 - Alchemy					 - Incomplete
 	 */
 	
 }
