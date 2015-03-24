@@ -28,6 +28,7 @@ public class MiningPropertiesPacket extends AbstractPacket {
 	}
 	
 	public void handleClientSide(EntityPlayer player) {
+		IridescentMiningProperties.register(player);
 		IridescentMiningProperties.get(player).loadNBTData(data);
 	}
 	

@@ -44,7 +44,7 @@ public class GuiIridescentProperties extends Gui {
 		
 		int barWidth = (int)(((float)properties.getCurrentExp() / properties.getMaxExp()) * 49); // Not sure why * 49
 		this.drawTexturedModalRect(xPos, yPos + 1, 0, 4, barWidth, 2);
-		this.drawString(this.mc.fontRendererObj, "Level: " + properties.getMiningLevel(), 54, 2, 16777215);
+		this.drawString(this.mc.fontRendererObj, "Level: " + properties.getSkillLevel(), 54, 2, 16777215);
 	}
 	
 }

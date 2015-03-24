@@ -26,7 +26,7 @@ public class IridescentEventHandler {
 			NBTTagCompound data = new NBTTagCompound();
 			IridescentMiningProperties.get((EntityPlayer)event.entity).saveNBTData(data);
 			ServerProxy.storeEntityData(event.entity.getName(), data);
-			IridescentMiningProperties.saveProxyData((EntityPlayer)event.entity);
+			IridescentMiningProperties.get((EntityPlayer)event.entity).saveProxyData((EntityPlayer)event.entity);
 		}
 	}
 	

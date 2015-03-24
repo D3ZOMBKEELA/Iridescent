@@ -87,6 +87,8 @@ public class Iridescent {
 	 *  	 - Wood cutting				 - Incomplete
 	 *  	 - Agility					 - Incomplete
 	 *  	 - Alchemy					 - Incomplete
+	 *  
+	 *  	 - Farming					 - Incomplete
 	 */
 	
 }
