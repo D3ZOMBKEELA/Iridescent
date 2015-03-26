@@ -2,21 +2,21 @@ package mod.iridescent.packets.properties;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import mod.iridescent.packets.AbstractPacket;
+import mod.iridescent.properties.packeted.IridescentWoodCuttingProperties;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
-import mod.iridescent.packets.AbstractPacket;
-import mod.iridescent.properties.packeted.IridescentMiningProperties;
 
-public class MiningPropertiesPacket extends AbstractPacket {
+public class WoodCuttingPropertiesPacket extends AbstractPacket {
 	
 	private NBTTagCompound data;
 	
-	public MiningPropertiesPacket() {}
+	public WoodCuttingPropertiesPacket() {}
 	
-	public MiningPropertiesPacket(EntityPlayer player) {
+	public WoodCuttingPropertiesPacket(EntityPlayer player) {
 		data = new NBTTagCompound();
-		IridescentMiningProperties.get(player).saveNBTData(data);
+		IridescentWoodCuttingProperties.get(player).saveNBTData(data);
 	}
 	
 	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
@@ -29,8 +29,8 @@ public class MiningPropertiesPacket extends AbstractPacket {
 	
 	public void handleClientSide(EntityPlayer player) {
 		if(player != null) {
-			IridescentMiningProperties.register(player);
-			IridescentMiningProperties.get(player).loadNBTData(data);
+			IridescentWoodCuttingProperties.register(player);
+			IridescentWoodCuttingProperties.get(player).loadNBTData(data);
 		}
 	}
 	

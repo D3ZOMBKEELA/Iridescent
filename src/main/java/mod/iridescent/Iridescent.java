@@ -6,6 +6,7 @@ import mod.iridescent.proxy.IProxy;
 import mod.iridescent.reference.ModRef;
 import mod.iridescent.reference.NetworkRef;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -42,7 +43,10 @@ public class Iridescent {
 		packetPipeline.postInitialise();
 		
 		achievements.postInit(); // XXX Might need to move this to either preInit or init
-		MinecraftForge.EVENT_BUS.register(new IridescentEventHandler());
+		
+		IridescentEventHandler handler = new IridescentEventHandler();
+		MinecraftForge.EVENT_BUS.register(handler);
+		FMLCommonHandler.instance().bus().register(handler);
 		proxy.registerRenderers();
 	}
 	
@@ -78,16 +82,15 @@ public class Iridescent {
 	 *  	 - Archery					 - Incomplete
 	 *  	 - Magic					 - Incomplete
 	 *  	 - Defense					 - Incomplete
-	 *  	 - Crafting					 - Incomplete
+	 *  	 - Crafting					 - Complete
 	 *  	 - Mining					 - Complete
 	 *  	 - Smithing					 - Incomplete
 	 *  	 - Fishing					 - Incomplete
 	 *  	 - Cooking					 - Incomplete
 	 *  	 - Firemaking				 - Incomplete
-	 *  	 - Wood cutting				 - Incomplete
+	 *  	 - Wood cutting				 - Complete
 	 *  	 - Agility					 - Incomplete
 	 *  	 - Alchemy					 - Incomplete
-	 *  
 	 *  	 - Farming					 - Incomplete
 	 */
 	

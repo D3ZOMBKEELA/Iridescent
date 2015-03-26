@@ -1,7 +1,8 @@
-package mod.iridescent.properties;
+package mod.iridescent.properties.packeted;
 
 import mod.iridescent.Iridescent;
 import mod.iridescent.packets.properties.MiningPropertiesPacket;
+import mod.iridescent.properties.IridescentSkillProperty;
 import mod.iridescent.proxy.ServerProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,23 +38,17 @@ public class IridescentMiningProperties extends IridescentSkillProperty {
 	}
 	
 	public void sync(EntityPlayer player) {
-		Iridescent.packetPipeline.sendTo(new MiningPropertiesPacket(player), (EntityPlayerMP)player);
+		Iridescent.packetPipeline.sendTo(new MiningPropertiesPacket(player), player);
 	}
 	
 	public static final void register(EntityPlayer player) {
-		if(player != null) {
-			if(player.getExtendedProperties(SKILL_NAME) == null) {
-				player.registerExtendedProperties(SKILL_NAME, new IridescentMiningProperties(player));
-			}
+		if(player.getExtendedProperties(SKILL_NAME) == null) {
+			player.registerExtendedProperties(SKILL_NAME, new IridescentMiningProperties(player));
 		}
 	}
 	
 	public static final IridescentMiningProperties get(EntityPlayer player) {
-		if(player != null) {
-			return (IridescentMiningProperties)player.getExtendedProperties(SKILL_NAME);
-		}
-		
-		return null;
+		return (IridescentMiningProperties)player.getExtendedProperties(SKILL_NAME);
 	}
 	
 	public void saveNBTData(NBTTagCompound compound) {

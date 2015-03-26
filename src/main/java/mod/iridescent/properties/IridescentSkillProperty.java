@@ -48,6 +48,12 @@ public abstract class IridescentSkillProperty implements ISkillProperty {
 		return levelUp;
 	}
 	
+	public void reset() {
+		skillLevel = 1;
+		currentExp = 0;
+		maxExp = 15;
+	}
+	
 	public int getCurrentExp() {
 		return currentExp;
 	}

@@ -12,6 +12,8 @@ import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import mod.iridescent.packets.properties.CraftingPropertiesPacket;
+import mod.iridescent.packets.properties.WoodCuttingPropertiesPacket;
 import mod.iridescent.packets.properties.MiningPropertiesPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -136,7 +138,9 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Abstra
 
     public void registerPackets ()
     {
+    	registerPacket(WoodCuttingPropertiesPacket.class);
         registerPacket(MiningPropertiesPacket.class);
+        registerPacket(CraftingPropertiesPacket.class);
     }
 
     // Method to call from FMLPostInitializationEvent
@@ -199,7 +203,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Abstra
      * @param player
      *            The player to send it to
      */
-    public void sendTo (AbstractPacket message, EntityPlayerMP player)
+    public void sendTo (AbstractPacket message, EntityPlayer player) // Changed from EntityPlayerMP
     {
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(FMLOutboundHandler.OutboundTarget.PLAYER);
         this.channels.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(player);
